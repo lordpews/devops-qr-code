@@ -34,6 +34,11 @@ The front-end code exits in the `front-end-nextjs` directory. You can run the fr
 - Run the NextJS Server: `npm run dev`
 - Your Front-end Server should be running on `http://localhost:3000`
 
+### S3 configuration
+
+- turn of block all public access
+- update bucket policy to allow getobject from principal *
+
 
 ## Goal
 
