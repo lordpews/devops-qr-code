@@ -14,6 +14,8 @@ jobs:
 
     - name: build the image
       run: docker build ./api/ -t pews/backend-api:latest
+
+    - name: build the frontend image
       run: docker build ./front-end-nextjs/ -t pews/frontend:latest
 
     - name: Login to Docker Hub
@@ -22,8 +24,10 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-    - name: push the image
+    - name: push the backend image
       run: docker push pews/backend-api:latest
+      
+    - name: push the frontend image
       run: docker push pews/frontend:latest
 
     
