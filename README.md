@@ -53,3 +53,7 @@ Look at the capstone project for more detials.
 ## License
 
 [MIT](./LICENSE)
+
+## to-do
+
+use jenkins hosted on ec2 instead of github actions

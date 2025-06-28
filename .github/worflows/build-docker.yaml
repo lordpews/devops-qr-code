@@ -1,0 +1,28 @@
+name: Build and Publish Docker Images
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: build the image
+      run: docker build ./api/ -t pews/backend-api:latest
+    - name: push the image
+      run: docker push pews/backend-api:latest
+
+    # - name: Build and push API image
+    #   run: |
+    #     docker build -t ${{ secrets.DOCKER_USERNAME }}/api:latest ./api
+    #     docker push ${{ secrets.DOCKER_USERNAME }}/api:latest
+
+    # - name: Build and push Frontend image
+    #   run: |
+    #     docker build -t ${{ secrets.DOCKER_USERNAME }}/frontend:latest ./front-end-nextjs
+    #     docker push ${{ secrets.DOCKER_USERNAME }}/frontend:latest
