@@ -3,6 +3,9 @@ name: Build and Publish Docker Images
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - "api/Dockerfile"
+      - "front-end-nextjs/Dockerfile"
 
 jobs:
   build-and-push:
@@ -26,7 +29,7 @@ jobs:
 
     - name: push the backend image
       run: docker push pews/backend-api:latest
-      
+
     - name: push the frontend image
       run: docker push pews/frontend:latest
 
