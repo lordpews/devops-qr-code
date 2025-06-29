@@ -1,5 +1,7 @@
+# Use a lightweight Python base image
 FROM python:3.9-slim
 
+# Set the working directory inside the container
 WORKDIR /usr/src/app
 
 COPY requirements.txt ./
