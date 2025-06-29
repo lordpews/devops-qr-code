@@ -15,5 +15,5 @@ spec:
       containers:
       - name: qr-api
         image: pews/backend-api:latest
-      ports:
+        ports:
         - containerPort: 80
