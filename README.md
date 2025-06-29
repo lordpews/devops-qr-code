@@ -1,59 +1,141 @@
-# devops-qr-code
+# DevOps QR Code Project
 
-This is the sample application for the DevOps Capstone Project.
-It generates QR Codes for the provided URL, the front-end is in NextJS and the API is written in Python using FastAPI.
+## Overview
+This repository contains a full-stack application for generating QR codes. It includes a backend API, a frontend built with Next.js, and infrastructure as code (IaC) using Terraform and Kubernetes. The project is designed to demonstrate DevOps practices, including containerization, CI/CD, and cloud infrastructure management.
 
-## Application
+## Repository Structure
 
-**Front-End** - A web application where users can submit URLs.
+Below is a pictorial representation of the repository structure:
 
-**API**: API that receives URLs and generates QR codes. The API stores the QR codes in cloud storage(AWS S3 Bucket).
+```
+📦 devops-qr-code
+├── 📄 Dockerfile2
+├── 📄 Jenkinsfile
+├── 📄 LICENSE
+├── 📄 README.md
+├── 📂 api
+│   ├── 📄 Dockerfile
+│   ├── 📄 main.py
+│   ├── 📄 requirements.txt
+│   ├── 📄 test_main.py
+│   └── 📂 __pycache__
+│       ├── 📄 app.cpython-312.pyc
+│       └── 📄 main.cpython-312.pyc
+├── 📂 front-end-nextjs
+│   ├── 📄 Dockerfile
+│   ├── 📄 jsconfig.json
+│   ├── 📄 next.config.js
+│   ├── 📄 package.json
+│   ├── 📄 postcss.config.js
+│   ├── 📄 README.md
+│   ├── 📄 tailwind.config.js
+│   ├── 📂 public
+│   │   ├── 📄 next.svg
+│   │   └── 📄 vercel.svg
+│   └── 📂 src
+│       ├── 📂 app
+│       │   ├── 📄 favicon.ico
+│       │   ├── 📄 globals.css
+│       │   ├── 📄 layout.js
+│       │   ├── 📄 page.js
+│       │   └── 📂 api
+│       │       └── 📂 generate-qr
+│       │           └── 📄 route.js
+├── 📂 infra
+│   ├── 📄 main.tf
+│   ├── 📄 provider.tf
+│   ├── 📄 terraform.tfstate
+│   └── 📄 terraform.tfstate.backup
+└── 📂 k8s
+    ├── 📄 backend-service.yaml
+    ├── 📄 backend.yaml
+    ├── 📄 frontend-service.yaml
+    └── 📄 frontend.yaml
+```
 
-## Running locally
+### Backend (API)
+- **Path**: `api/`
+- **Description**: Contains the Python-based backend API for generating QR codes.
+- **Key Files**:
+  - `main.py`: Entry point for the API.
+  - `requirements.txt`: Python dependencies.
+  - `Dockerfile`: Dockerfile for containerizing the API.
+  - `test_main.py`: Unit tests for the API.
 
-### API
+### Frontend (Next.js)
+- **Path**: `front-end-nextjs/`
+- **Description**: Contains the frontend application built with Next.js for interacting with the QR code generator.
+- **Key Files**:
+  - `src/`: Source code for the frontend.
+  - `Dockerfile`: Dockerfile for containerizing the frontend.
+  - `package.json`: Node.js dependencies.
 
-The API code exists in the `api` directory. You can run the API server locally:
+### Infrastructure (Terraform)
+- **Path**: `infra/`
+- **Description**: Contains Terraform configuration files for provisioning cloud infrastructure.
+- **Key Files**:
+  - `main.tf`: Main Terraform configuration.
+  - `provider.tf`: Provider configuration for Terraform.
 
-- Clone this repo
-- Make sure you are in the `api` directory
-- Create a virtualenv by typing in the following command: `python -m venv .venv`
-- Install the required packages: `pip install -r requirements.txt`
-- Create a `.env` file, and add you AWS Access and Secret key, check  `.env.example`
-- Also, change the BUCKET_NAME to your S3 bucket name in `main.py`
-- Run the API server: `uvicorn main:app --reload`
-- Your API Server should be running on port `http://localhost:8000`
+### Kubernetes Manifests
+- **Path**: `k8s/`
+- **Description**: Contains Kubernetes YAML files for deploying the application.
+- **Key Files**:
+  - `backend.yaml`: Deployment configuration for the backend API.
+  - `frontend.yaml`: Deployment configuration for the frontend.
+  - `backend-service.yaml`: Service configuration for the backend API.
+  - `frontend-service.yaml`: Service configuration for the frontend.
 
-### Front-end
+## Prerequisites
+- Docker
+- Kubernetes (Minikube, EKS, or any Kubernetes cluster)
+- Terraform
+- Node.js and npm
+- Python 3.9+
 
-The front-end code exits in the `front-end-nextjs` directory. You can run the front-end server locally:
+## Setup Instructions
 
-- Clone this repo
-- Make sure you are in the `front-end-nextjs` directory
-- Install the dependencies: `npm install`
-- Run the NextJS Server: `npm run dev`
-- Your Front-end Server should be running on `http://localhost:3000`
+### 1. Clone the Repository
+```bash
+git clone https://github.com/your-repo/devops-qr-code.git
+cd devops-qr-code
+```
 
-### S3 configuration
+### 2. Build and Run with Docker
+#### Backend
+```bash
+cd api
+docker build -t qr-api .
+docker run -p 5000:5000 qr-api
+```
 
-- turn of block all public access
-- update bucket policy to allow getobject from principal *
+#### Frontend
+```bash
+cd front-end-nextjs
+docker build -t qr-frontend .
+docker run -p 3000:3000 qr-frontend
+```
 
+### 3. Deploy with Kubernetes
+```bash
+kubectl apply -f k8s/
+```
 
-## Goal
+### 4. Provision Infrastructure with Terraform
+```bash
+cd infra
+terraform init
+terraform apply
+```
 
-The goal is to get hands-on with DevOps practices like Containerization, CICD and monitoring.
-
-Look at the capstone project for more detials.
-
-## Author
-
-[Rishab Kumar](https://github.com/rishabkumar7)
+## CI/CD Pipeline *to do*
+- The `Jenkinsfile` defines the CI/CD pipeline for building, testing, and deploying the application.
+- Ensure Jenkins is configured with Docker and Kubernetes plugins.
 
 ## License
+This project is licensed under the MIT License. See the `LICENSE` file for details.
 
-[MIT](./LICENSE)
+## Contributing
+Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes.
 
-## to-do
 
-use jenkins hosted on ec2 instead of github actions
